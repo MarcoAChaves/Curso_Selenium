@@ -20,10 +20,11 @@ public class TesteGoogle {
         WebDriver driver = new FirefoxDriver();
         //WebDriver driver = new ChromeDriver();
         //WebDriver driver = new EdgeDriver();
-        driver.manage().window().setPosition(new Point(200, 200));
+        driver.manage().window().setPosition(new Point(100, 100));
         driver.manage().window().setSize(new Dimension(1200, 765));
         driver.get("https://google.com");
         System.out.println(driver.getTitle());
         Assert.assertEquals("Google", driver.getTitle());
+        driver.quit();
     }
 }
