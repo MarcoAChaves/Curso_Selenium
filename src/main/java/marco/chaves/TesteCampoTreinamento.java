@@ -81,8 +81,8 @@ public class TesteCampoTreinamento {
         Assert.assertEquals(8, options.size());
 
         boolean encontrou = false;
-        for (WebElement option: options){
-            if (option.getText().equals("Mestrado")){
+        for (WebElement option : options) {
+            if (option.getText().equals("Mestrado")) {
                 encontrou = true;
                 break;
             }
@@ -109,5 +109,18 @@ public class TesteCampoTreinamento {
         allSelectedOptions = combo.getAllSelectedOptions();
         Assert.assertEquals(2, allSelectedOptions.size());
         driver.quit();
+    }
+
+    @Test
+    public void deveInteragirComBotoes() {
+        WebDriver driver = new FirefoxDriver();
+        driver.manage().window().setSize(new Dimension(1200, 765));
+        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        WebElement botao = driver.findElement(By.id("buttonSimple"));
+        botao.click();
+
+        Assert.assertEquals("Obrigado!", botao.getAttribute("value"));
+        driver.quit();
+
     }
 }
