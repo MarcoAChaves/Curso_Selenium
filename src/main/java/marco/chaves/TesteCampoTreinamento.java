@@ -136,7 +136,7 @@ public class TesteCampoTreinamento {
     }
 
     @Test
-    public void deveBuscarTestosNaPagina() {
+    public void deveBuscarTextosNaPagina() {
         WebDriver driver = new FirefoxDriver();
         driver.manage().window().setSize(new Dimension(1200, 765));
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
@@ -146,4 +146,6 @@ public class TesteCampoTreinamento {
         Assert.assertEquals("Cuidado onde clica, muitas armadilhas...", driver.findElement(By.className("facilAchar")).getText());
         driver.quit();
     }
+
+
 }
