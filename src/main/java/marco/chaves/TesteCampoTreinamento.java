@@ -31,4 +31,26 @@ public class TesteCampoTreinamento {
 
         driver.quit();
     }
+
+    @Test
+    public void deveInteragirComRadioButton(){
+        WebDriver driver = new FirefoxDriver();
+        driver.manage().window().setSize(new Dimension(1200, 765));
+        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        driver.findElement(By.id("elementosForm:sexo:0")).click();
+        Assert.assertTrue(driver.findElement(By.id("elementosForm:sexo:0")).isSelected());
+
+        driver.quit();
+    }
+
+    @Test
+    public void deveInteragirComCheckBox() {
+        WebDriver driver = new FirefoxDriver();
+        driver.manage().window().setSize(new Dimension(1200, 765));
+        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        driver.findElement(By.id("elementosForm:comidaFavorita:0")).click();
+        Assert.assertTrue(driver.findElement(By.id("elementosForm:comidaFavorita:0")).isSelected());
+
+        driver.quit();
+    }
 }
