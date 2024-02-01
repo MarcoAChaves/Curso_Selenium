@@ -44,4 +44,20 @@ public class TesteFramesEJanelas {
         driver.findElement(By.tagName("textarea")).sendKeys("e agora?");
     }
 
+    @Test
+    public void deveInteragirComJanelasSemTitulo() {
+        WebDriver driver = new FirefoxDriver();
+        driver.manage().window().setSize(new Dimension(1200, 765));
+        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+
+        driver.findElement(By.id("buttonPopUpHard")).click();
+        System.out.println(driver.getWindowHandle());
+        System.out.println(driver.getWindowHandles());
+        driver.switchTo().window((String)driver.getWindowHandles().toArray()[1]);
+        driver.findElement(By.tagName("textarea")).sendKeys("Sera?");
+        driver.switchTo().window((String)driver.getWindowHandles().toArray()[0]);
+        driver.findElement(By.tagName("textarea")).sendKeys("Eita?");
+
+        driver.quit();
+    }
 }
