@@ -34,13 +34,13 @@ public class TesteCampoTreinamento {
 
     @Test
     public void testeTextField() {
-        dsl.escreve("elementosForm:nome", "Teste de escrita");
+        dsl.escrever("elementosForm:nome", "Teste de escrita");
         Assert.assertEquals("Teste de escrita", dsl.obterValorCampo("elementosForm:nome"));
     }
 
     @Test
     public void deveInteragirComTextArea() {
-        dsl.escreve("elementos:sugestoes", "teste");
+        dsl.escrever("elementosForm:sugestoes", "teste");
         Assert.assertEquals("teste", driver.findElement(By.id("elementosForm:sugestoes")).getAttribute("value"));
     }
 
@@ -103,7 +103,7 @@ public class TesteCampoTreinamento {
     public void deveInteragirComBotoes() {
         dsl.clicarBotao("buttonSimple");
         WebElement botao = driver.findElement(By.id("buttonSimple"));
-        Assert.assertEquals("Clique Me!", botao.getAttribute("value"));
+        Assert.assertEquals("Obrigado!", botao.getAttribute("value"));
     }
 
     @Test
