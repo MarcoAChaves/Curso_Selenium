@@ -15,6 +15,7 @@ public class TesteRegraDeNegocio {
 
     private WebDriver driver;
 
+
     @Before
     public void inicializa() {
         driver = new FirefoxDriver();
