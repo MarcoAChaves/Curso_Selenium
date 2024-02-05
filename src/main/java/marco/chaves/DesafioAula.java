@@ -66,7 +66,6 @@ public class DesafioAula {
     public void deveValidarSexoObrigatorio(){
         page.setName("Nome Qualquer");
         page.setSobrenome( "Sobrenome qualquer");
-        dsl.clicarBotao("elementosForm:cadastrar");
         page.cadastrar();
         Assert.assertEquals("Sexo eh obrigatorio", dsl.alertaObterTextoEAceita());
     }
