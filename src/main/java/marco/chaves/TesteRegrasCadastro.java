@@ -79,6 +79,6 @@ public class TesteRegrasCadastro {
         page.setEsporte(esportes);
         page.cadastrar();
         System.out.println(msg);
-        //Assert.assertEquals(msg, dsl.alertaObterTextoEAceita()); - erro de execução nessa linha
+        Assert.assertEquals(msg, dsl.alertaObterTextoEAceita()); // erro de execução nessa linha
     }
 }
