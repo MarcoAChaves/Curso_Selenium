@@ -36,5 +36,12 @@ public class TestePrime {
         Assert.assertTrue(dsl.isRadioMarcado("j_idt86:console:1"));
 
     }
+
+    @Test
+    public void deveInteragirComSelectPrime(){
+        driver.get("https://www.primefaces.org/showcase/ui/input/oneMenu.xhtml");
+        dsl.selecionarComboPrime("j_idt86:console", "Xbox One");
+        Assert.assertEquals("Xbox One", dsl.obterTexto("j_idt86:console_label"));
+    }
 }
 
