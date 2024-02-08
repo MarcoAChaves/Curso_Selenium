@@ -14,11 +14,11 @@ public class TesteGoogle {
     public void teste() {
 
         //System.setProperty("webdriver.gecko.driver", "C:\\geckodriver\\geckodriver.exe");
-        //System.setProperty("webdriver.Chrome.driver", "C:\\Chromedriver\\chromedriver-win64.exe");
-        //System.setProperty("webdriver.gecko.driver", "C:/geckodriver/geckodriver.exe");
+        //System.setProperty("webdriver.Chrome.driver", "C:\\Chromedriver\\chrome-win64\\chrome.exe");
+        System.setProperty("webdriver.gecko.driver", "C:/geckodriver/geckodriver.exe");
 
         WebDriver driver = new FirefoxDriver();
-        //WebDriver driver = new ChromeDriver();
+       // WebDriver driver = new ChromeDriver();
         //WebDriver driver = new EdgeDriver();
         driver.manage().window().setPosition(new Point(100, 100));
         driver.manage().window().setSize(new Dimension(1200, 765));

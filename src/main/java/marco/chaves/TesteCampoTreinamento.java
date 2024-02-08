@@ -26,7 +26,7 @@ public class TesteCampoTreinamento {
 
     @After
     public void finaliza() {
-       // driver.quit();
+        driver.quit();
     }
 
     @Test
@@ -60,7 +60,7 @@ public class TesteCampoTreinamento {
         //combo.selectByIndex(2); - modo de busca por posição
         //combo.selectByValue("superior"); - modo de busca por valor
         //combo.selectByVisibleText("2o grau completo"); //modo de busca por valor visível
-        dsl.selecionarCombo("elementosForm:escolaridade","2o grau completo" );
+        dsl.selecionarCombo("elementosForm:escolaridade", "2o grau completo");
         Assert.assertEquals("2o grau completo", dsl.obterValorCombo("elementosForm:escolaridade"));
     }
 
@@ -117,7 +117,7 @@ public class TesteCampoTreinamento {
     }
 
     @Test
-    public void testJavascript(){
+    public void testJavascript() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         //js.executeScript("alert('Testando js via selenium')"); - interagindo com o alerta
         js.executeScript("document.getElementById('elementosForm:nome').value = 'Escrito via js'");
@@ -129,7 +129,7 @@ public class TesteCampoTreinamento {
     }
 
     @Test
-    public void deveClicarBotaoTabela(){
+    public void deveClicarBotaoTabela() {
         dsl.clicarBotaoTabela("Escolaridade", "Mestrado", "Radio", "elementosForm:tableUsuarios");
     }
 }
