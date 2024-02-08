@@ -1,37 +1,32 @@
 package marco.chaves;
 
+import marco.chaves.core.DSL;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
+
+import static marco.chaves.core.DriverFactory.getDriver;
+import static marco.chaves.core.DriverFactory.killDriver;
 
 public class DesafioAula {
 
-    private WebDriver driver;
     private DSL dsl;
     private CampoTreinamentoPage page;
 
     @Before
-    public void inicializa(){
-        driver = new FirefoxDriver();
-        driver.manage().window().setSize(new Dimension(1200, 765));
-        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-        dsl = new DSL(driver);
-        page = new CampoTreinamentoPage(driver);
+    public void inicializa() {
+        getDriver().get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        page = new CampoTreinamentoPage();
     }
 
     @After
-    public void finaliza(){
-        driver.quit();
+    public void finaliza() {
+        killDriver();
     }
 
     @Test
-    public void deveRealizarCadastroComSucesso(){
+    public void deveRealizarCadastroComSucesso() {
         page.setName("Wagner");
         page.setSobrenome("Costa");
         page.setSexoMasculino();
@@ -40,7 +35,7 @@ public class DesafioAula {
         page.setEsporte("Natacao");
         page.cadastrar();
 
-        Assert.assertEquals("Cadastrado!",page.obterResultadoCadastro());
+        Assert.assertEquals("Cadastrado!", page.obterResultadoCadastro());
         Assert.assertEquals("Wagner", page.obterNomeCadastro());
         Assert.assertEquals("Costa", page.obterSobrenomeCadastro());
         Assert.assertEquals("Masculino", page.obterSexoCadastro());
@@ -50,28 +45,28 @@ public class DesafioAula {
     }
 
     @Test
-    public void deveValidarNomeObrigatorio(){
+    public void deveValidarNomeObrigatorio() {
         page.cadastrar();
         Assert.assertEquals("Nome eh obrigatorio", dsl.alertaObterTextoEAceita());
     }
 
     @Test
-    public void deveValidarSobrenomeObrigatorio(){
+    public void deveValidarSobrenomeObrigatorio() {
         page.setName("Nome Qualquer");
         page.cadastrar();
         Assert.assertEquals("Sobrenome eh obrigatorio", dsl.alertaObterTextoEAceita());
     }
 
     @Test
-    public void deveValidarSexoObrigatorio(){
+    public void deveValidarSexoObrigatorio() {
         page.setName("Nome Qualquer");
-        page.setSobrenome( "Sobrenome qualquer");
+        page.setSobrenome("Sobrenome qualquer");
         page.cadastrar();
         Assert.assertEquals("Sexo eh obrigatorio", dsl.alertaObterTextoEAceita());
     }
 
     @Test
-    public void deveValidarComidaVegetariana(){
+    public void deveValidarComidaVegetariana() {
         page.setName("Nome qualquer");
         page.setSobrenome("Sobrenome qualquer");
         page.setSexoFeminino();
@@ -82,7 +77,7 @@ public class DesafioAula {
     }
 
     @Test
-    public void deveValidarEsportistaIndeciso(){
+    public void deveValidarEsportistaIndeciso() {
         page.setName("Nome qualquer");
         page.setSobrenome("Sobrenome qualquer");
         page.setSexoFeminino();

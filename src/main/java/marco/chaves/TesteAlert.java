@@ -1,35 +1,30 @@
 package marco.chaves;
 
+import marco.chaves.core.DSL;
+import marco.chaves.core.DriverFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+
 
 public class TesteAlert {
 
-    private WebDriver driver;
     private DSL dsl;
 
     @Before
-    public void inicializa(){
-        driver = new FirefoxDriver();
-        driver.manage().window().setSize(new Dimension(1200, 765));
-        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-        dsl = new DSL(driver);
+    public void inicializa() {
+        DriverFactory.getDriver().get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        dsl = new DSL();
     }
 
     @After
-    public void finaliza(){
-        driver.quit();
+    public void finaliza() {
+        DriverFactory.killDriver();
     }
 
     @Test
-    public void deveInteragirComAlertSimples(){
+    public void deveInteragirComAlertSimples() {
         dsl.clicarBotao("alert");
         String texto = dsl.alertaObterTextoEAceita();
         Assert.assertEquals("Alert Simples", texto);
@@ -38,7 +33,7 @@ public class TesteAlert {
     }
 
     @Test
-    public void deveInteragirComAlertConfirm(){
+    public void deveInteragirComAlertConfirm() {
         dsl.clicarBotao("confirm");
         Assert.assertEquals("Confirm Simples", dsl.alertaObterTextoEAceita());
         Assert.assertEquals("Confirmado", dsl.alertaObterTextoEAceita());
@@ -49,7 +44,7 @@ public class TesteAlert {
     }
 
     @Test
-    public void deveInteragirComAlertPrompt(){
+    public void deveInteragirComAlertPrompt() {
         dsl.clicarBotao("prompt");
         Assert.assertEquals("Digite um numero", dsl.alertaObterTexto());
         dsl.alertaEscrever("12");
