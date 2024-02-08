@@ -49,8 +49,8 @@ public class TesteSincronismo {
     @Test
     public void deveUtilizarEsperaExplicita()throws InterruptedException {
         dsl.clicarBotao("buttonDelay");
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("novoCampo")));
+//        WebDriverWait wait = new WebDriverWait(driver, 30);
+//        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("novoCampo")));
         dsl.escrever("novoCampo", "Deu Certo?");
     }
 }
