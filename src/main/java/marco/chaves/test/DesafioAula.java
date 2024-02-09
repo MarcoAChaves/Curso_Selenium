@@ -1,15 +1,15 @@
-package marco.chaves;
+package marco.chaves.test;
 
+import marco.chaves.core.BaseTest;
 import marco.chaves.core.DSL;
-import org.junit.After;
+import marco.chaves.page.CampoTreinamentoPage;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import static marco.chaves.core.DriverFactory.getDriver;
-import static marco.chaves.core.DriverFactory.killDriver;
 
-public class DesafioAula {
+public class DesafioAula extends BaseTest {
 
     private DSL dsl;
     private CampoTreinamentoPage page;
@@ -18,11 +18,6 @@ public class DesafioAula {
     public void inicializa() {
         getDriver().get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
         page = new CampoTreinamentoPage();
-    }
-
-    @After
-    public void finaliza() {
-        killDriver();
     }
 
     @Test

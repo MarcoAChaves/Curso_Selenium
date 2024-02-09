@@ -1,4 +1,4 @@
-package marco.chaves;
+package marco.chaves.test;
 
 import marco.chaves.core.DSL;
 import marco.chaves.core.DriverFactory;

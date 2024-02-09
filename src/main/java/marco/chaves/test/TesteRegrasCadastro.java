@@ -1,8 +1,9 @@
-package marco.chaves;
+package marco.chaves.test;
 
+import marco.chaves.core.BaseTest;
 import marco.chaves.core.DSL;
 import marco.chaves.core.DriverFactory;
-import org.junit.After;
+import marco.chaves.page.CampoTreinamentoPage;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @RunWith(Parameterized.class)
 
-public class TesteRegrasCadastro {
+public class TesteRegrasCadastro extends BaseTest {
 
     private DSL dsl;
     private CampoTreinamentoPage page;
@@ -38,11 +39,6 @@ public class TesteRegrasCadastro {
         DriverFactory.getDriver().get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
         dsl = new DSL();
         page = new CampoTreinamentoPage();
-    }
-
-    @After
-    public void finaliza() {
-        DriverFactory.killDriver();
     }
 
     @Parameterized.Parameters

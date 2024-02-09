@@ -1,3 +1,5 @@
+package marco.chaves.test;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.Dimension;

@@ -1,16 +1,10 @@
-package marco.chaves;
+package marco.chaves.page;
 
-import marco.chaves.core.DSL;
+import marco.chaves.core.BasePage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
-public class CampoTreinamentoPage {
+public class CampoTreinamentoPage extends BasePage {
 
-    private DSL dsl;
-
-    public CampoTreinamentoPage() {
-        dsl = new DSL();
-    }
 
     public void setName(String nome) {
         dsl.escrever("elementosForm:nome", "Wagner");
