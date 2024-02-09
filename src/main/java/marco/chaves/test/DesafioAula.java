@@ -22,7 +22,7 @@ public class DesafioAula extends BaseTest {
 
     @Test
     public void deveRealizarCadastroComSucesso() {
-        page.setName("Wagner");
+        page.setNome("Wagner");
         page.setSobrenome("Costa");
         page.setSexoMasculino();
         page.setComidaPizza();
@@ -47,14 +47,14 @@ public class DesafioAula extends BaseTest {
 
     @Test
     public void deveValidarSobrenomeObrigatorio() {
-        page.setName("Nome Qualquer");
+        page.setNome("Nome Qualquer");
         page.cadastrar();
         Assert.assertEquals("Sobrenome eh obrigatorio", dsl.alertaObterTextoEAceita());
     }
 
     @Test
     public void deveValidarSexoObrigatorio() {
-        page.setName("Nome Qualquer");
+        page.setNome("Nome Qualquer");
         page.setSobrenome("Sobrenome qualquer");
         page.cadastrar();
         Assert.assertEquals("Sexo eh obrigatorio", dsl.alertaObterTextoEAceita());
@@ -62,7 +62,7 @@ public class DesafioAula extends BaseTest {
 
     @Test
     public void deveValidarComidaVegetariana() {
-        page.setName("Nome qualquer");
+        page.setNome("Nome qualquer");
         page.setSobrenome("Sobrenome qualquer");
         page.setSexoFeminino();
         page.setComidaCarne();
@@ -73,7 +73,7 @@ public class DesafioAula extends BaseTest {
 
     @Test
     public void deveValidarEsportistaIndeciso() {
-        page.setName("Nome qualquer");
+        page.setNome("Nome qualquer");
         page.setSobrenome("Sobrenome qualquer");
         page.setSexoFeminino();
         page.setComidaCarne();
