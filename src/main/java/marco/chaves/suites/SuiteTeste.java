@@ -15,7 +15,7 @@ import org.junit.runners.Suite;
 public class SuiteTeste {
 
     @AfterClass
-    public static void finalizaTudo(){
+    public static void finalizaTudo() {
         DriverFactory.killDriver();
 
     }
