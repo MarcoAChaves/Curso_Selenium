@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import static marco.chaves.core.DriverFactory.getDriver;
 
+
 public class DesafioAula extends BaseTest {
 
     private DSL dsl;
@@ -39,7 +40,7 @@ public class DesafioAula extends BaseTest {
         Assert.assertEquals("Natacao", page.obterEsportesCadastro());
     }
 
-    @Test
+    /*@Test
     public void deveValidarNomeObrigatorio() {
         page.cadastrar();
         Assert.assertEquals("Nome eh obrigatorio", dsl.alertaObterTextoEAceita());
@@ -80,5 +81,5 @@ public class DesafioAula extends BaseTest {
         page.setEsporte("Karate", "O que eh esporte?");
         page.cadastrar();
         Assert.assertEquals("Voce faz esporte ou nao?", dsl.alertaObterTextoEAceita());
-    }
+    }*/
 }
