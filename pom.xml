@@ -7,10 +7,6 @@
     <groupId>marco.chaves</groupId>
     <artifactId>CursoSelenium</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <modules>
-        <module>ProjetoBasico</module>
-    </modules>
 
     <dependencies>
         <dependency>
