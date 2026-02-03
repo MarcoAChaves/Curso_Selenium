@@ -1,4 +1,4 @@
-package marco.chaves.test;
+package marco.chaves.test.java;
 
 import marco.chaves.core.DSL;
 import marco.chaves.core.DriverFactory;
@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-public class TesteAlert {
+public class TesteAlert extends BaseTest {
 
     private DSL dsl;
 

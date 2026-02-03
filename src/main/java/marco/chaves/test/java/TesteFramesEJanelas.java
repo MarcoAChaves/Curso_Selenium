@@ -1,4 +1,4 @@
-package marco.chaves.test;
+package marco.chaves.test.java;
 
 import marco.chaves.core.DSL;
 import marco.chaves.core.DriverFactory;
@@ -11,7 +11,7 @@ import org.openqa.selenium.WebElement;
 
 import static marco.chaves.core.DriverFactory.killDriver;
 
-public class TesteFramesEJanelas {
+public class TesteFramesEJanelas extends BaseTest{
     private DSL dsl;
 
     @Before

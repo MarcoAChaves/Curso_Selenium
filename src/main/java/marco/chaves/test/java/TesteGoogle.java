@@ -1,4 +1,4 @@
-package marco.chaves.test;
+package marco.chaves.test.java;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -10,7 +10,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
-public class TesteGoogle {
+public class TesteGoogle extends BaseTest{
 
     @Test
     public void teste() {

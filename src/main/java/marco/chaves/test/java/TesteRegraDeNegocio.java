@@ -1,4 +1,4 @@
-package marco.chaves.test;
+package marco.chaves.test.java;
 
 import marco.chaves.core.DriverFactory;
 import org.junit.After;
@@ -9,7 +9,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
 
-public class TesteRegraDeNegocio {
+public class TesteRegraDeNegocio extends BaseTest {
 
 
     @Before

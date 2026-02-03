@@ -1,6 +1,6 @@
-package marco.chaves.test;
+package marco.chaves.test.java;
 
-import marco.chaves.core.BaseTest;
+import marco.chaves.test.java.BaseTest;
 import marco.chaves.core.DSL;
 import marco.chaves.core.DriverFactory;
 import marco.chaves.page.CampoTreinamentoPage;

@@ -1,7 +1,9 @@
-package marco.chaves.test;
+package marco.chaves.test.java;
 
 import marco.chaves.core.DSL;
 import marco.chaves.core.DriverFactory;
+import marco.chaves.utils.ScreenshotUtils;
+import marco.chaves.utils.StepLogger;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,15 +13,18 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import java.sql.Driver;
 import java.util.List;
 
+import static marco.chaves.core.DriverFactory.driver;
 import static marco.chaves.core.DriverFactory.getDriver;
 
 
-public class TesteCampoTreinamento {
+public class TesteCampoTreinamento extends BaseTest{
 
 
     private DSL dsl;
+
 
     @Before
     public void inicializa() {
@@ -37,6 +42,12 @@ public class TesteCampoTreinamento {
     public void testeTextField() {
         dsl.escrever("elementosForm:nome", "Teste de escrita");
         Assert.assertEquals("Teste de escrita", dsl.obterValorCampo("elementosForm:nome"));
+
+        String shot1 = ScreenshotUtils.capture(driver, "Teste de escrita");
+        StepLogger.logStep("Acessou tela de login", "PASS", shot1);
+//
+//        driver.findElement(By.id("user")).sendKeys("admin");
+//        driver.findElement(By.id("pass")).sendKeys("123");
     }
 
     @Test
