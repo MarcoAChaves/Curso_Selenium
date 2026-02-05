@@ -1,45 +1,36 @@
 package marco.chaves.test.java;
 
-
-import marco.chaves.utils.ActionUtils;
+import marco.chaves.utils.PDFReportUtils;
 import marco.chaves.utils.StepLogger;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
-import org.junit.rules.TestName;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import marco.chaves.utils.PDFReportUtils;
-
-import java.time.Duration;
-
-import static marco.chaves.utils.PDFReportUtils.*;
 
 public class BaseTest {
 
     protected WebDriver driver;
-    protected ActionUtils acao;
 
-    @Rule
-    public TestName testName = new TestName();
-
+    @Before
     public void setup() {
-        driver = new ChromeDriver();   // ← AQUI o driver nasce
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        StepLogger.clear();
+        driver = new ChromeDriver();
         driver.manage().window().maximize();
+
+        driver.get("file:///C:/WorkSpace/CursoSelenium/src/main/resources/componentes.html");
     }
+
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
 
-        String testName = this.getClass().getSimpleName(); // nome da classe de teste
+        // 1️⃣ GERA O PDF PRIMEIRO (com driver ainda vivo)
+        PDFReportUtils.generateReport(this.getClass().getSimpleName());
 
-        PDFReportUtils.generateReport(testName);
-
+        // 2️⃣ DEPOIS fecha o navegador
         if (driver != null) {
             driver.quit();
-            System.out.println("Driver finalizado");
         }
     }
-}
 
+}

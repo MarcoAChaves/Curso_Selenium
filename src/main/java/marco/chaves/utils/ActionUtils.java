@@ -2,43 +2,162 @@ package marco.chaves.utils;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ActionUtils {
 
-    private WebDriver driver;
-
-    public ActionUtils(WebDriver driver) {
-        this.driver = driver;
+    private static WebElement waitElement(WebDriver driver, By by) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
-    private WebDriver getDriver() {
-        if (driver == null) {
-            throw new RuntimeException("Driver está NULL dentro do ActionUtils");
+    /* =========================
+       TYPE
+       ========================= */
+    public static void type(WebDriver driver, By by, String text, String stepDesc) {
+        try {
+            WebElement element = waitElement(driver, by);
+            element.click();
+            element.clear();
+            element.sendKeys(text);
+
+            String shot = ScreenshotUtils.capture(driver, stepDesc);
+            StepLogger.logStep(stepDesc, "PASS", shot);
+
+        } catch (Exception e) {
+            String shot = ScreenshotUtils.capture(driver, "ERRO_" + stepDesc);
+            StepLogger.logStep(stepDesc, "FAIL", shot);
+            throw e;
         }
-        return driver;
     }
 
-    public void open(String url, String descricao) {
-        getDriver().get(url);
-        registrar(descricao);
+    /* =========================
+       CLICK
+       ========================= */
+    public static void click(WebDriver driver, By by, String stepDesc) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement element = wait.until(ExpectedConditions.elementToBeClickable(by));
+            element.click();
+
+            String shot = ScreenshotUtils.capture(driver, stepDesc);
+            StepLogger.logStep(stepDesc, "PASS", shot);
+
+        } catch (Exception e) {
+            String shot = ScreenshotUtils.capture(driver, "ERRO_" + stepDesc);
+            StepLogger.logStep(stepDesc, "FAIL", shot);
+            throw e;
+        }
     }
 
-    public void click(By locator, String descricao) {
-        getDriver().findElement(locator).click();
-        registrar(descricao);
+    /* =========================
+       GET VALUE (inputs)
+       ========================= */
+    public static String getValue(WebDriver driver, By by, String stepDesc) {
+        try {
+            WebElement element = waitElement(driver, by);
+            String value = element.getAttribute("value");
+
+            String shot = ScreenshotUtils.capture(driver, stepDesc);
+            StepLogger.logStep(stepDesc + " -> " + value, "PASS", shot);
+
+            return value;
+
+        } catch (Exception e) {
+            String shot = ScreenshotUtils.capture(driver, "ERRO_" + stepDesc);
+            StepLogger.logStep(stepDesc, "FAIL", shot);
+            throw e;
+        }
     }
 
-    public void type(By locator, String texto, String descricao) {
-        getDriver().findElement(locator).sendKeys(texto);
-        registrar(descricao);
+    /* =========================
+       IS SELECTED (checkbox / radio)
+       ========================= */
+    public static boolean isSelected(WebDriver driver, By by, String stepDesc) {
+        try {
+            WebElement element = waitElement(driver, by);
+            boolean selected = element.isSelected();
+
+            String shot = ScreenshotUtils.capture(driver, stepDesc);
+            StepLogger.logStep(stepDesc + " -> " + selected, "PASS", shot);
+
+            return selected;
+
+        } catch (Exception e) {
+            String shot = ScreenshotUtils.capture(driver, "ERRO_" + stepDesc);
+            StepLogger.logStep(stepDesc, "FAIL", shot);
+            throw e;
+        }
     }
 
-    private void registrar(String descricao) {
+    /* =========================
+       SELECT BY VISIBLE TEXT
+       ========================= */
+    public static void selectByVisibleText(WebDriver driver, By by, String texto, String stepDesc) {
+        try {
+            WebElement element = waitElement(driver, by);
+            Select select = new Select(element);
+            select.selectByVisibleText(texto);
 
-        String nomeSeguro = descricao.replaceAll("[^a-zA-Z0-9-_]", "_");
+            String shot = ScreenshotUtils.capture(driver, stepDesc);
+            StepLogger.logStep(stepDesc, "PASS", shot);
 
-        String shot = ScreenshotUtils.capture(getDriver(), nomeSeguro);
-
-        StepLogger.logStep(descricao, "PASS", shot);
+        } catch (Exception e) {
+            String shot = ScreenshotUtils.capture(driver, "ERRO_" + stepDesc);
+            StepLogger.logStep(stepDesc, "FAIL", shot);
+            throw e;
+        }
     }
+
+    /* =========================
+       GET SELECTED OPTION
+       ========================= */
+    public static String getSelectedOption(WebDriver driver, By by, String stepDesc) {
+        try {
+            WebElement element = waitElement(driver, by);
+            Select select = new Select(element);
+            String texto = select.getFirstSelectedOption().getText();
+
+            String shot = ScreenshotUtils.capture(driver, stepDesc);
+            StepLogger.logStep(stepDesc + " -> " + texto, "PASS", shot);
+
+            return texto;
+
+        } catch (Exception e) {
+            String shot = ScreenshotUtils.capture(driver, "ERRO_" + stepDesc);
+            StepLogger.logStep(stepDesc, "FAIL", shot);
+            throw e;
+        }
+    }
+
+    public static List<String> getAllOptionsFromCombo(WebDriver driver, By by, String stepDesc) {
+        try {
+            WebElement element = waitElement(driver, by);
+            Select select = new Select(element);
+
+            List<String> optionsText = new ArrayList<>();
+
+            for (WebElement option : select.getOptions()) {
+                optionsText.add(option.getText());
+            }
+
+            String shot = ScreenshotUtils.capture(driver, stepDesc);
+            StepLogger.logStep(stepDesc + " -> " + optionsText, "PASS", shot);
+
+            return optionsText;
+
+        } catch (Exception e) {
+            String shot = ScreenshotUtils.capture(driver, "ERRO_" + stepDesc);
+            StepLogger.logStep(stepDesc, "FAIL", shot);
+            throw e;
+        }
+    }
+
 }

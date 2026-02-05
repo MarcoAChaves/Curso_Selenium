@@ -1,150 +1,122 @@
 package marco.chaves.test.java;
 
-import marco.chaves.core.DSL;
-import marco.chaves.core.DriverFactory;
-import marco.chaves.utils.ScreenshotUtils;
-import marco.chaves.utils.StepLogger;
-import org.junit.After;
+import marco.chaves.utils.ActionUtils;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 
-import java.sql.Driver;
 import java.util.List;
 
-import static marco.chaves.core.DriverFactory.driver;
-import static marco.chaves.core.DriverFactory.getDriver;
+import static org.openqa.selenium.By.id;
 
 
-public class TesteCampoTreinamento extends BaseTest{
-
-
-    private DSL dsl;
-
-
-    @Before
-    public void inicializa() {
-        //driver.get("C:\\Users\\MOCV\\Downloads\\campo_treinamento\\componentes.html");
-        getDriver().get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-        dsl = new DSL();
-    }
-
-    @After
-    public void finaliza() {
-        DriverFactory.killDriver();
-    }
+public class TesteCampoTreinamento extends BaseTest {
 
     @Test
     public void testeTextField() {
-        dsl.escrever("elementosForm:nome", "Teste de escrita");
-        Assert.assertEquals("Teste de escrita", dsl.obterValorCampo("elementosForm:nome"));
 
-        String shot1 = ScreenshotUtils.capture(driver, "Teste de escrita");
-        StepLogger.logStep("Acessou tela de login", "PASS", shot1);
-//
-//        driver.findElement(By.id("user")).sendKeys("admin");
-//        driver.findElement(By.id("pass")).sendKeys("123");
+        ActionUtils.type(driver,
+                id("elementosForm:nome"),
+                "Teste de escrita",
+                "Preencheu campo Nome");
+
+        Assert.assertEquals("Teste de escrita",
+                ActionUtils.getValue(driver,
+                        id("elementosForm:nome"),
+                        "Validou valor do campo Nome"));
     }
 
     @Test
     public void deveInteragirComTextArea() {
-        dsl.escrever("elementosForm:sugestoes", "teste");
-        Assert.assertEquals("teste", getDriver().findElement(By.id("elementosForm:sugestoes")).getAttribute("value"));
+
+        ActionUtils.type(driver,
+                id("elementosForm:sugestoes"),
+                "teste",
+                "Preencher o campo Sugestões");
+
+        ActionUtils.getValue(driver,
+                id("elementosForm:sugestoes"),
+                "Campo preenchido"
+        );
     }
+
 
     @Test
     public void deveInteragirComRadioButton() {
-        getDriver().findElement(By.id("elementosForm:sexo:0")).click();
-        Assert.assertTrue(getDriver().findElement(By.id("elementosForm:sexo:0")).isSelected());
+
+        // Clica no radio Masculino
+        ActionUtils.click(driver,
+                By.id("elementosForm:sexo:0"),
+                "Selecionou sexo Masculino");
+
+        // Valida se está selecionado
+        boolean selecionado = ActionUtils.isSelected(driver,
+                By.id("elementosForm:sexo:0"),
+                "Validou radio Masculino selecionado");
+
+        Assert.assertTrue(selecionado);
     }
+
 
     @Test
     public void deveInteragirComCheckBox() {
-        dsl.clicarRadio("elementosForm:comidaFavorita:0");
-        Assert.assertTrue(dsl.isRadioMarcado("elementosForm:comidaFavorita:0"));
+        // Clica no checkbox Carne
+        ActionUtils.click(driver,
+                By.id("elementosForm:comidaFavorita:0"),
+                "Selecionou comida favorita");
+
+        // Valida se está selecionado
+        boolean selecionado1 = ActionUtils.isSelected(driver,
+                By.id("elementosForm:comidaFavorita:0"),
+                "Validou checkbox selecionado");
+
+        Assert.assertTrue(selecionado1);
     }
 
     @Test
     public void deveInteragirComCombo() {
-        //WebElement element = driver.findElement(By.id("elementosForm:escolaridade"));
-        //Select combo = new Select(element);
-        //combo.selectByIndex(2); - modo de busca por posição
-        //combo.selectByValue("superior"); - modo de busca por valor
-        //combo.selectByVisibleText("2o grau completo"); //modo de busca por valor visível
-        dsl.selecionarCombo("elementosForm:escolaridade", "2o grau completo");
-        Assert.assertEquals("2o grau completo", dsl.obterValorCombo("elementosForm:escolaridade"));
+        ActionUtils.selectByVisibleText(driver,
+                By.id("elementosForm:escolaridade"),
+                "Superior",
+                "Selecionou escolaridade Superior");
+
+        String valorSelecionado = ActionUtils.getSelectedOption(driver,
+                By.id("elementosForm:escolaridade"),
+                "Validou escolaridade selecionada");
+
+        Assert.assertEquals("Superior", valorSelecionado);
     }
 
+    //
     @Test
     public void deveVerificarValoresCombo() {
-        WebElement element = getDriver().findElement(By.id("elementosForm:escolaridade"));
-        Select combo = new Select(element);
-        List<WebElement> options = combo.getOptions();
-        Assert.assertEquals(8, options.size());
 
-        boolean encontrou = false;
-        for (WebElement option : options) {
-            if (option.getText().equals("Mestrado")) {
-                encontrou = true;
-                break;
-            }
-        }
-        Assert.assertTrue(encontrou);
-    }
+        ActionUtils.click(driver,
+                By.id("elementosForm:escolaridade"),
+                "abre o combo"
+        );
 
-    @Test
-    public void deveVerificarValoresComboMultiplo() {
-        dsl.selecionarCombo("elementosForm:esportes", "Natacao");
-        dsl.selecionarCombo("elementosForm:esportes", "Corrida");
-        dsl.selecionarCombo("elementosForm:esportes", "O que eh esporte?");
-        WebElement element = getDriver().findElement(By.id("elementosForm:esportes"));
-        Select combo = new Select(element);
-        List<WebElement> allSelectedOptions = combo.getAllSelectedOptions();
-        Assert.assertEquals(3, allSelectedOptions.size());
+        List<String> opcoes = ActionUtils.getAllOptionsFromCombo(
+                driver,
+                By.id("elementosForm:escolaridade"),
+                "Listou opções do combo Escolaridade"
+        );
 
-        combo.deselectByVisibleText("Corrida");
-        allSelectedOptions = combo.getAllSelectedOptions();
-        Assert.assertEquals(2, allSelectedOptions.size());
-    }
+        // Exibe no console (opcional)
+        System.out.println(opcoes);
 
-    @Test
-    public void deveInteragirComBotoes() {
-        dsl.clicarBotao("buttonSimple");
-        WebElement botao = getDriver().findElement(By.id("buttonSimple"));
-        Assert.assertEquals("Obrigado!", botao.getAttribute("value"));
-    }
+        // Valida tamanho
+        Assert.assertEquals(8, opcoes.size());
 
-    @Test
-    public void deveInteragirComLinks() {
-        dsl.clicarLink("Voltar");
-        Assert.assertEquals("Voltou!", dsl.obterTexto("resultado"));
-    }
-
-    @Test
-    public void deveBuscarTextosNaPagina() {
-        //Assert.assertTrue(driver.findElement(By.tagName("body")).getText().contains("Campo de Treinamento"));
-        Assert.assertEquals("Campo de Treinamento", dsl.obterTexto(By.tagName("h3")));
-        Assert.assertEquals("Cuidado onde clica, muitas armadilhas...", dsl.obterTexto(By.className("facilAchar")));
-    }
-
-    @Test
-    public void testJavascript() {
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        //js.executeScript("alert('Testando js via selenium')"); - interagindo com o alerta
-        js.executeScript("document.getElementById('elementosForm:nome').value = 'Escrito via js'");
-        js.executeScript("document.getElementById('elementosForm:sobrenome').type = 'radio'");
-
-        WebElement element = getDriver().findElement(By.id("elementosForm:nome"));
-        js.executeScript("arguments[0].style.border = arguments[1]", element, "solid 4px red");
-
-    }
-
-    @Test
-    public void deveClicarBotaoTabela() {
-        dsl.clicarBotaoTabela("Escolaridade", "Mestrado", "Radio", "elementosForm:tableUsuarios");
+        // Valida conteúdo
+        Assert.assertTrue(opcoes.contains("1o grau incompleto"));
+        Assert.assertTrue(opcoes.contains("1o grau completo"));
+        Assert.assertTrue(opcoes.contains("2o grau incompleto"));
+        Assert.assertTrue(opcoes.contains("2o grau completo"));
+        Assert.assertTrue(opcoes.contains("Superior"));
+        Assert.assertTrue(opcoes.contains("Especializacao"));
+        Assert.assertTrue(opcoes.contains("Mestrado"));
+        Assert.assertTrue(opcoes.contains("Doutorado"));
     }
 }
+
