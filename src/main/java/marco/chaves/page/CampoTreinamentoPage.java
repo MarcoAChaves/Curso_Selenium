@@ -6,77 +6,43 @@ import org.openqa.selenium.By;
 public class CampoTreinamentoPage extends BasePage {
 
 
+   public static boolean isRadioMarcado(String sexo) {
+        return true;
+    }
+
+    public static boolean isCheckMarcado(String carne) {
+        return true;
+    }
+
     public void setNome(String nome) {
         dsl.escrever("elementosForm:nome", nome);
     }
 
-    public String getNome() {
+    public static String getName() {
         return dsl.obterValorCampo("elementosForm:nome");
     }
 
-    public void setSobrenome(String sobrenome) {
-        dsl.escrever("elementosForm:sobrenome", sobrenome);
+    public static void setSugestoes(String texto) {
+        dsl.escrever(By.id("elementosForm:sugestoes"), texto);
+    }
+    public static String getSugestoes() {
+        return dsl.obterValorCampo("elementosForm:sugestoes");
     }
 
-    public void setSexoMasculino(){
+    public static void clicarRadio1(String sexo){
         dsl.clicarRadio("elementosForm:sexo:0");
     }
 
-    public void setSexoFeminino(){
-        dsl.clicarRadio("elementosForm:sexo:1");
-    }
+    public static void selecionarComida(String comida) {
 
-    public void setComidaCarne(){
-        dsl.clicarRadio("elementosForm:comidaFavorita:0");
-    }
+        String id = switch (comida.toLowerCase()) {
+            case "carne" -> "elementosForm:comidaFavorita:0";
+            case "frango" -> "elementosForm:comidaFavorita:1";
+            case "pizza" -> "elementosForm:comidaFavorita:2";
+            case "vegetariano" -> "elementosForm:comidaFavorita:3";
+            default -> throw new IllegalArgumentException("Comida inválida: " + comida);
+        };
 
-    public void setComidaPizza(){
-        dsl.clicarRadio("elementosForm:comidaFavorita:2");
-    }
-
-    public void setComidaVegetariano(){
-        dsl.clicarRadio("elementosForm:comidaFavorita:3");
-    }
-
-    public void setEscolaridade(String valor) {
-        dsl.selecionarCombo("elementosForm:escolaridade", valor);
-    }
-
-    public void setEsporte(String... valores) {
-        for(String valor: valores)
-            dsl.selecionarCombo("elementosForm:esportes", valor);
-    }
-
-    public void cadastrar(){
-        dsl.clicarBotao("elementosForm:cadastrar");
-    }
-
-    public String obterResultadoCadastro(){
-        return dsl.obterTexto(By.xpath("//*[@id='resultado']/span"));
-    }
-
-
-    public String obterNomeCadastro(){
-        return dsl.obterTexto(By.xpath("//*[@id='descNome']/span"));
-    }
-
-    public String obterSobrenomeCadastro(){
-        return dsl.obterTexto(By.xpath("//*[@id='descSobrenome']/span"));
-    }
-
-    public String obterSexoCadastro(){
-        return dsl.obterTexto(By.xpath("//*[@id='descSexo']/span"));
-    }
-
-    public String obterComidaCadastro(){
-        return dsl.obterTexto(By.xpath("//*[@id='descComida']/span"));
-    }
-
-    public String obterEscolaridadeCadastro(){
-        return dsl.obterTexto(By.xpath("//*[@id='descEscolaridade']/span"));
-    }
-
-    public String obterEsportesCadastro(){
-        return dsl.obterTexto(By.xpath("//*[@id='descEsportes']/span"));
+        dsl.clicarCheckbox(By.id(id));
     }
 }

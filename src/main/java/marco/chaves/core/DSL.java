@@ -6,10 +6,10 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.ArrayList;
 import java.util.List;
 
+import static marco.chaves.core.DriverFactory.driver;
 import static marco.chaves.core.DriverFactory.getDriver;
 
 public class DSL {
-
 
     /********* TextField e TextArea ************/
 
@@ -35,16 +35,11 @@ public class DSL {
         clicarRadio(By.id(id));
     }
 
-    public boolean isRadioMarcado(String id) {
-        return getDriver().findElement(By.id(id)).isSelected();
-    }
-
-    public void clicarCheck(String id) {
-        getDriver().findElement(By.id(id)).click();
-    }
-
-    public boolean isCheckMarcado(String id) {
-        return getDriver().findElement(By.id(id)).isSelected();
+    public void clicarCheckbox(By by) {
+        WebElement element = driver.findElement(by);
+        if (!element.isSelected()) {
+            element.click();
+        }
     }
 
     /********* Combo ************/

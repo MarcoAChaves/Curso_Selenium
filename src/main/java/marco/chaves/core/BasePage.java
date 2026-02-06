@@ -2,7 +2,7 @@ package marco.chaves.core;
 
 public class BasePage {
 
-    protected DSL dsl;
+    protected static DSL dsl;
 
     public BasePage() {
         dsl = new DSL();
