@@ -1,36 +1,48 @@
 package marco.chaves.utils;
 
 
-
-
+import marco.chaves.core.DriverFactory;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+
+import static marco.chaves.core.DriverFactory.driver;
+
 
 public class ScreenshotUtils {
 
-    public static String capture(WebDriver driver, String name) {
-        try {
-            String baseDir = System.getProperty("user.dir");
-            String dir = baseDir + "/reports/screenshots/";
-            new File(dir).mkdirs();
+        public static String takeScreenshot(String name) {
 
-            String path = dir + name + "_" + System.currentTimeMillis() + ".png";
+            WebDriver driver = DriverFactory.getDriver();
 
-            File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            Files.copy(src.toPath(), new File(path).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            try {
+                File src = ((TakesScreenshot) driver)
+                        .getScreenshotAs(OutputType.FILE);
 
-            System.out.println("📸 Screenshot salvo em: " + path);
-            return path;
+                String baseDir = System.getProperty("user.dir");
+                String dir = baseDir + "/reports/screenshots/";
+                new File(dir).mkdirs();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+                String fileName = name.replace(" ", "_")
+                        + "_" + System.currentTimeMillis() + ".png";
+
+                File dest = new File(dir + fileName);
+                FileUtils.copyFile(src, dest);
+
+                System.out.println("📸 Screenshot salvo em: " + dest.getAbsolutePath());
+                return dest.getAbsolutePath();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
         }
+
+    public static String capture(WebDriver driver, String stepDesc) {
+        return stepDesc;
     }
 }
 

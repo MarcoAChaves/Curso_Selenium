@@ -10,6 +10,10 @@ public class CampoTreinamentoPage extends BasePage {
         dsl.escrever("elementosForm:nome", nome);
     }
 
+    public String getNome() {
+        return dsl.obterValorCampo("elementosForm:nome");
+    }
+
     public void setSobrenome(String sobrenome) {
         dsl.escrever("elementosForm:sobrenome", sobrenome);
     }

@@ -12,46 +12,55 @@ import java.io.File;
 public class PDFReportUtils {
 
     public static void generateReport(String testName) {
+
+        Document document = null;
+
         try {
             String baseDir = System.getProperty("user.dir");
             String pdfDir = baseDir + "/reports/pdf/";
             new File(pdfDir).mkdirs();
 
-            String pdfPath = pdfDir + testName + "_" + System.currentTimeMillis() + ".pdf";
+            String safeName = testName.replace(" ", "_");
+            String pdfPath = pdfDir + safeName + "_" + System.currentTimeMillis() + ".pdf";
 
             PdfWriter writer = new PdfWriter(pdfPath);
             PdfDocument pdf = new PdfDocument(writer);
-            Document document = new Document(pdf);
+            document = new Document(pdf);
 
             document.add(new Paragraph("Relatório de Execução").setBold());
             document.add(new Paragraph("Teste: " + testName));
             document.add(new Paragraph(" "));
 
             for (StepLogger.Step step : StepLogger.getSteps()) {
-
                 document.add(new Paragraph("Passo: " + step.getDescription()));
                 document.add(new Paragraph("Status: " + step.getStatus()));
 
-                String path = step.getScreenshotPath();
-
-                if (path != null && new File(path).exists()) {
-                    Image img = new Image(ImageDataFactory.create(path.replace("\\", "/")));
-                    img.setAutoScale(true);
-                    document.add(img);
-                } else {
-                    document.add(new Paragraph("⚠ Screenshot não encontrado"));
+                if (step.getScreenshotPath() != null) {
+                    File imgFile = new File(step.getScreenshotPath());
+                    if (imgFile.exists()) {
+                        Image img = new Image(
+                                ImageDataFactory.create(imgFile.getAbsolutePath())
+                        );
+                        img.setAutoScale(true);
+                        document.add(img);
+                    }
                 }
 
                 document.add(new Paragraph(" "));
             }
 
-            document.close();
-            StepLogger.clear();
-
-            System.out.println("✅ PDF COM IMAGENS criado em: " + pdfPath);
+            System.out.println("✅ PDF gerado com sucesso");
 
         } catch (Exception e) {
+            System.err.println("❌ Erro ao gerar PDF");
             e.printStackTrace();
+
+        } finally {
+            if (document != null) {
+                document.close();
+            }
+            StepLogger.clear();
         }
     }
 }
+
