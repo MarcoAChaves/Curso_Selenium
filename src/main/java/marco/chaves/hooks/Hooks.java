@@ -30,7 +30,7 @@ public class Hooks {
         String screenshotPath = ScreenshotUtils.takeScreenshot(stepName);
 
         StepLogger.logStep(
-                stepName,
+                scenario.getStatus().name(),
                 scenario.isFailed() ? "FAIL" : "PASS",
                 screenshotPath
         );

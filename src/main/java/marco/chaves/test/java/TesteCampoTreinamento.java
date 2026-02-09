@@ -40,7 +40,6 @@ public class TesteCampoTreinamento extends BaseTest {
         );
     }
 
-
     @Test
     public void deveInteragirComRadioButton() {
 
@@ -56,7 +55,6 @@ public class TesteCampoTreinamento extends BaseTest {
 
         Assert.assertTrue(selecionado);
     }
-
 
     @Test
     public void deveInteragirComCheckBox() {
@@ -87,7 +85,6 @@ public class TesteCampoTreinamento extends BaseTest {
         Assert.assertEquals("Superior", valorSelecionado);
     }
 
-    //
     @Test
     public void deveVerificarValoresCombo() {
 

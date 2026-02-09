@@ -16,3 +16,8 @@ Feature: Campo de Treinamento
     When o usuario seleciona a comida favorita "Carne"
     Then a comida favorita "Carne" deve estar selecionado
 
+  Scenario: Selecionar escolaridade no combo
+    When seleciono a escolaridade "Superior"
+    Then a escolaridade selecionada deve ser "Superior"
+
+
