@@ -1,8 +1,8 @@
 package marco.chaves.runner;
 
-import org.junit.runner.RunWith;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
+import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
@@ -11,8 +11,10 @@ import io.cucumber.junit.CucumberOptions;
                 "marco.chaves.steps",
                 "marco.chaves.hooks"
         },
-        plugin = {"pretty"},
-        monochrome = true
+        plugin = {
+                "pretty",
+                "marco.chaves.listeners.StepListener"
+        }
 )
 public class RunCucumberTest {
 }

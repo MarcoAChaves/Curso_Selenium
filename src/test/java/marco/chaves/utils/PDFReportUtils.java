@@ -11,12 +11,15 @@ import com.itextpdf.layout.element.Paragraph;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PDFReportUtils {
 
     public static void generateReport(String scenarioName) {
 
         Document document = null;
+        List<File> screenshotsParaApagar = new ArrayList<>();
 
         try {
             String baseDir = System.getProperty("user.dir");
@@ -50,15 +53,13 @@ public class PDFReportUtils {
             // ===== STEPS =====
             for (StepLogger.Step step : StepLogger.getSteps()) {
 
-                Paragraph stepTitle = new Paragraph(
+                document.add(new Paragraph(
                         stepNumber + ". " + step.getDescription()
-                ).setBold();
-
-                document.add(stepTitle);
+                ).setBold());
 
                 Paragraph status = new Paragraph("Status: " + step.getStatus());
 
-                if ("PASS".equals(step.getStatus())) {
+                if ("PASS".equalsIgnoreCase(step.getStatus())) {
                     status.setFontColor(ColorConstants.GREEN);
                 } else {
                     status.setFontColor(ColorConstants.RED);
@@ -68,12 +69,16 @@ public class PDFReportUtils {
 
                 if (step.getScreenshotPath() != null) {
                     File imgFile = new File(step.getScreenshotPath());
+
                     if (imgFile.exists()) {
                         Image img = new Image(
                                 ImageDataFactory.create(imgFile.getAbsolutePath())
                         );
                         img.setAutoScale(true);
                         document.add(img);
+
+                        // marca para apagar depois
+                        screenshotsParaApagar.add(imgFile);
                     }
                 }
 
@@ -81,7 +86,7 @@ public class PDFReportUtils {
                 stepNumber++;
             }
 
-            System.out.println("✅ PDF profissional gerado em: " + pdfPath);
+            System.out.println("✅ PDF gerado: " + pdfPath);
 
         } catch (Exception e) {
             System.err.println("❌ Erro ao gerar PDF");
@@ -89,8 +94,14 @@ public class PDFReportUtils {
 
         } finally {
             if (document != null) {
-                document.close();
+                document.close(); // 🔥 MUITO IMPORTANTE
             }
+
+            // 🧹 AGORA SIM pode apagar os arquivos
+            for (File file : screenshotsParaApagar) {
+                file.delete();
+            }
+
             StepLogger.clear();
         }
     }

@@ -1,4 +1,4 @@
-package marco.chaves.test.java;
+package test;
 
 import marco.chaves.utils.PDFReportUtils;
 import marco.chaves.utils.StepLogger;

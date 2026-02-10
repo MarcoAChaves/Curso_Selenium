@@ -1,16 +1,16 @@
 package marco.chaves.hooks;
 
-import io.cucumber.java.After;
-import io.cucumber.java.AfterStep;
-import io.cucumber.java.Before;
-import io.cucumber.java.Scenario;
+import io.cucumber.java.*;
 import marco.chaves.core.DriverFactory;
+import marco.chaves.utils.ActionUtils;
 import marco.chaves.utils.PDFReportUtils;
 import marco.chaves.utils.ScreenshotUtils;
 import marco.chaves.utils.StepLogger;
 import org.openqa.selenium.WebDriver;
 
 public class Hooks {
+
+    private ActionUtils StepContext;
 
     @Before
     public void setUp() {
@@ -22,23 +22,23 @@ public class Hooks {
         driver.get("file:///" + filePath.replace("\\", "/"));
     }
 
+    @BeforeStep
+    public void beforeStep(Scenario scenario) {
+        scenario.getSourceTagNames(); // força inicialização
+    }
+
     @AfterStep
     public void afterStep(Scenario scenario) {
 
-        String stepName = scenario.getName(); // depois melhoramos isso
-
-        String screenshotPath = ScreenshotUtils.takeScreenshot(stepName);
-
-        StepLogger.logStep(
-                scenario.getStatus().name(),
-                scenario.isFailed() ? "FAIL" : "PASS",
-                screenshotPath
+        String screenshotPath = ScreenshotUtils.takeScreenshot(
+                scenario.getName()
         );
+
+        StepLogger.setLastScreenshot(screenshotPath);
     }
 
     @After
     public void tearDown(Scenario scenario) {
-
         PDFReportUtils.generateReport(scenario.getName());
         DriverFactory.killDriver();
     }

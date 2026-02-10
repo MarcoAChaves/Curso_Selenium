@@ -7,6 +7,9 @@ public class StepLogger {
 
     private static final List<Step> steps = new ArrayList<>();
 
+    // 👇 ADICIONE ESTA LINHA
+    private static String lastScreenshot;
+
     public static class Step {
         private String description;
         private String status;
@@ -18,9 +21,17 @@ public class StepLogger {
             this.screenshotPath = screenshotPath;
         }
 
-        public String getDescription() { return description; }
-        public String getStatus() { return status; }
-        public String getScreenshotPath() { return screenshotPath; }
+        public String getDescription() {
+            return description;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public String getScreenshotPath() {
+            return screenshotPath;
+        }
     }
 
     public static void logStep(String description, String status, String screenshotPath) {
@@ -31,7 +42,17 @@ public class StepLogger {
         return steps;
     }
 
+    // 👇 MÉTODOS PARA SCREENSHOT
+    public static void setLastScreenshot(String path) {
+        lastScreenshot = path;
+    }
+
+    public static String getLastScreenshot() {
+        return lastScreenshot;
+    }
+
     public static void clear() {
         steps.clear();
+        lastScreenshot = null;
     }
 }
