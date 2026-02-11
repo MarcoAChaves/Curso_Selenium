@@ -14,7 +14,8 @@ import org.junit.runner.RunWith;
         plugin = {
                 "pretty",
                 "marco.chaves.listeners.StepListener"
-        }
+        },
+        tags = "@smoke"
 )
 public class RunCucumberTest {
 }
